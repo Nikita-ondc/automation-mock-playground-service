@@ -41,8 +41,14 @@ container.setCacheService0(createRedisCacheService(redis0Client));
 container.setCacheService1(createRedisCacheService(redis1Client));
 container.setQueueService(createInMemoryQueue());
 
-const fnvuUrl = process.env.FINVU_AA_SERVICE_URL;
-if (fnvuUrl) {
-    MockRunner.initSharedRunner({ allowedFetchBaseUrls: [fnvuUrl] });
+const allowedFetchBaseUrls = [
+    process.env.FINVU_AA_SERVICE_URL,
+    process.env.OSRM_BASE_URL || 'https://router.project-osrm.org',
+].filter((u): u is string => !!u);
+if (allowedFetchBaseUrls.length > 0) {
+    MockRunner.initSharedRunner({ allowedFetchBaseUrls });
 }
+
+
 logger.info('Main container initialized successfully');
+
