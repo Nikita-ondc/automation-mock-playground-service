@@ -52,6 +52,7 @@ export const handleGetFormService = async (
     const newContent = ejs.render(getBeautifulForm(htmlContent), {
         actionUrl: submitUrl,
         submissionData: JSON.stringify(submissionData),
+        formId: formId,
     });
     return {
         dataType: 'html',
